@@ -1,10 +1,28 @@
 export const addBinary = (a: string, b: string): string => {
-  const numA = parseInt(a, 2);
-  const numB = parseInt(b, 2);
-  return (numA + numB).toString(2);
+  let i = a.length - 1,
+    j = b.length - 1,
+    carry = 0;
+  let res = '';
+  while (i >= 0 || j >= 0) {
+    let sum = carry;
+    if (i >= 0) sum += Number(a.charAt(i));
+    if (j >= 0) sum += Number(b.charAt(j));
+    res += sum % 2;
+    carry = Math.floor(sum / 2);
+    i--;
+    j--;
+  }
+
+  if (carry) res += carry.toString();
+  return res.split('').reverse().join('');
 };
 
 const testCases = [
+  {
+    a: '11',
+    b: '1',
+    expected: '100',
+  },
   {
     a: '10100000100100110110010000010101111011011001101110111111111101000000101111001110001111100001101',
     b: '110101001011101110001111100110001010100001101011101010000011011011001011101111001100000011011110011',
@@ -13,6 +31,8 @@ const testCases = [
 ];
 
 testCases.forEach(testCase => {
-  console.log('result: ', addBinary(testCase.a, testCase.b) === testCase.expected);
-  console.log('exp: ', testCase.expected, '\ngot: ', addBinary(testCase.a, testCase.b));
+  const res = addBinary(testCase.a, testCase.b);
+  if (res !== testCase.expected) {
+    console.log('failed\nexp: ', testCase.expected, '\ngot: ', addBinary(testCase.a, testCase.b));
+  }
 });
