@@ -23,18 +23,20 @@ class TreeNode {
   }
 }
 
-export function sortedArrayToBST(nums: number[]): TreeNode | null {
-  if (nums.length === 1) return new TreeNode(nums[0]);
-  if (nums.length === 0) return null;
+export function isBalanced(root: TreeNode | null): boolean {
+  const getHeight = (node: TreeNode | null): number => {
+    if (!node) return 0;
 
-  const centerIdx = Math.floor(nums.length / 2);
-  const root = new TreeNode(nums[centerIdx]);
+    const leftHeight = getHeight(node.left);
+    if (leftHeight < 0) return -1;
 
-  const leftSubtree = nums.slice(0, centerIdx);
-  root.left = sortedArrayToBST(leftSubtree);
+    const rightHeight = getHeight(node.right);
+    if (rightHeight < 0) return -1;
 
-  const rightSubtree = nums.slice(centerIdx + 1, nums.length);
-  root.right = sortedArrayToBST(rightSubtree);
+    if (Math.abs(leftHeight - rightHeight) > 1) return -1;
 
-  return root;
+    return 1 + Math.max(leftHeight, rightHeight);
+  };
+
+  return getHeight(root) >= 0;
 }
