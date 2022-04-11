@@ -8,5 +8,3 @@ export const isPalindrome = (s: string): boolean => {
   }
   return true;
 };
-
-console.log(isPalindrome('ab_a'));
