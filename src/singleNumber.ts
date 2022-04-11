@@ -10,5 +10,3 @@ export const singleNumber = (nums: number[]): number => {
 
   return map.keys().next().value;
 };
-
-singleNumber([2, 2, 1]);
